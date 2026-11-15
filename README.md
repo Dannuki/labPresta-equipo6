@@ -50,7 +50,7 @@ labPresta-equipo6/
 
 * **Día 1 — Domingo 15 de Noviembre**
   * **DP (Persistencia):** Creé la estructura del proyecto, configuré SQLite (`ConexionDB.java`), implementé `EquipoDAO.java` y actualicé el `README.md` con la planificación inicial. *Bloqueos:* Ninguno.
-  * **D (Vista):** 
+  * **D (Vista):** Creé la interfaz gráfica (FrmRegistroEquipo.java), la integré en el Main.java reemplazando la ventana de prueba, configuré el tablero de Trello con las listas requeridas y realicé el commit inicial de la historia HU-C1 en GitHub. *Bloqueos:* Ninguno.
   * **SP (Lógica):** 
   * **RQ (Vista/Persistencia):**
 
