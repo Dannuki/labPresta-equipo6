@@ -41,7 +41,18 @@ labPresta-equipo6/
 * **Objetivo:** Implementar la arquitectura base, conexión a SQLite y el módulo completo de registro y gestión de equipos (`HU-C1`).
 
 **Planificación inicial (Trello):**
+
   ![Tablero Trello - Inicio Sprint 1](evidencias/sprint1-inicio.png)
+  
   Asignación de tareas a cada miembro del scrum team
 
+#### 🗓️ Bitácora Daily Scrum — Sprint 1
+
+* **Día 1 — Domingo 15 de Noviembre**
+  * **DP (Persistencia):** Creé la estructura del proyecto, configuré SQLite (`ConexionDB.java`), implementé `EquipoDAO.java` y actualicé el `README.md` con la planificación inicial. *Bloqueos:* Ninguno.
+  * **D (Vista):** 
+  * **SP (Lógica):** 
+  * **RQ (Vista/Persistencia):**
+
 * **Entregables completados:**
+
