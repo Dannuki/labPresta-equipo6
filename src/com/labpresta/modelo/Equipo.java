@@ -4,7 +4,14 @@ public class Equipo {
     private String codigo;
     private String tipo;
     private String descripcion;
-    private String estado;
+    private String estado; // Disponible, Prestado, En mantenimiento
+
+    public Equipo(String codigo, String tipo, String descripcion) {
+        this.codigo = codigo;
+        this.tipo = tipo;
+        this.descripcion = descripcion;
+        this.estado = "Disponible";
+    }
 
     public Equipo(String codigo, String tipo, String descripcion, String estado) {
         this.codigo = codigo;
@@ -13,15 +20,31 @@ public class Equipo {
         this.estado = estado;
     }
 
-    public String getCodigo() { return codigo; }
-    public void setCodigo(String codigo) { this.codigo = codigo; }
+    // Getters
+    public String getCodigo() {
+        return codigo;
+    }
 
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
+    public String getTipo() {
+        return tipo;
+    }
 
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public String getEstado() {
+        return estado;
+    }
+
+    // Setters
+    public void setEstado(String estado) {
+        // Validación básica de los estados permitidos
+        if (estado.equals("Disponible") || estado.equals("Prestado") || estado.equals("En mantenimiento")) {
+            this.estado = estado;
+        } else {
+            throw new IllegalArgumentException("Estado no válido");
+        }
+    }
+
 }
