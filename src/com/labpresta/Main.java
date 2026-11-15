@@ -5,8 +5,11 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import com.labpresta.persistencia.ConexionDB;
+
 public class Main {
     public static void main(String[] args) {
+        ConexionDB.inicializarBaseDatos();
         SwingUtilities.invokeLater(() -> {
             JFrame ventana = new JFrame("LabPresta - Prueba Inicial");
             ventana.setSize(400, 200);
