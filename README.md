@@ -39,6 +39,9 @@ labPresta-equipo6/
 
 ### Sprint 1 (Del Domingo 15 de Noviembre al Miercoles 18 de Noviembre)
 * **Objetivo:** Implementar la arquitectura base, conexión a SQLite y el módulo completo de registro y gestión de equipos (`HU-C1`).
+
 **Planificación inicial (Trello):**
   ![Tablero Trello - Inicio Sprint 1](evidencias/sprint1-inicio.png)
+  Asignación de tareas a cada miembro del scrum team
+
 * **Entregables completados:**
