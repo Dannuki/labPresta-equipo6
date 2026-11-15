@@ -33,3 +33,10 @@ labPresta-equipo6/
             ├── persistencia/      # Conexión SQLite y consultas SQL (DAOs): ConexionDB.java, EquipoDAO.java, etc.
             ├── logica/            # Validaciones y reglas de negocio: EquipoService.java, PrestamoService.java, etc.
             └── vista/             # Pantallas y formularios en Java Swing: VentanaPrincipal.java, PanelEquipos.java, etc.
+```
+
+## 📊 Seguimiento de Sprints
+
+### Sprint 1 (Del Domingo 15 de Noviembre al Miercoles 18 de Noviembre)
+* **Objetivo:** Implementar la arquitectura base, conexión a SQLite y el módulo completo de registro y gestión de equipos (`HU-C1`).
+* **Entregables completados:**
