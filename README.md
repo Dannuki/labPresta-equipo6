@@ -28,11 +28,12 @@ labPresta-equipo6/
 └── src/
     └── com/
         └── labpresta/
-            ├── Main.java          # Punto de entrada que inicia la aplicación
-            ├── modelo/            # Clases entidad (POJOs): Equipo.java, Usuario.java, Prestamo.java
-            ├── persistencia/      # Conexión SQLite y consultas SQL (DAOs): ConexionDB.java, EquipoDAO.java, etc.
-            ├── logica/            # Validaciones y reglas de negocio: EquipoService.java, PrestamoService.java, etc.
-            └── vista/             # Pantallas y formularios en Java Swing: VentanaPrincipal.java, PanelEquipos.java, etc.
+│           ├── Main.java
+│           ├── modelo/
+│           ├── persistencia/
+│           ├── logica/
+│           ├── vista/
+│           └── pruebas/
 ```
 
 ## 📊 Seguimiento de Sprints
