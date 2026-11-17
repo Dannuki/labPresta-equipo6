@@ -55,5 +55,12 @@ labPresta-equipo6/
   * **SP (Lógica):** 
   * **RQ (Vista/Persistencia):**
 
+
+* **Día 2 — Lunes 16 de Noviembre**
+  * **DP (Persistencia):** Cerré y se aprobó mi módulo de persistencia de equipos. *Bloqueos:* Ninguno.
+  * **D (Vista):** 
+  * **SP (Lógica):** 
+  * **RQ (Vista/Persistencia):**
+
 * **Entregables completados:**
 
