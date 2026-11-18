@@ -62,5 +62,11 @@ labPresta-equipo6/
   * **SP (Lógica):** 
   * **RQ (Vista/Persistencia):**
 
+* **Día 3 — Martes 17 de Noviembre**
+  * **DP (Persistencia):** 
+  * **D (Vista):** 
+  * **SP (Lógica):** Implementé `EquipoService.java` con las validaciones de campos obligatorios, código único y control de estado para `HU-C1`, y lo conecté con `FrmRegistroEquipo` en `Main.java`. *Bloqueos:* Ninguno.
+  * **RQ (Vista/Persistencia):** 
+
 * **Entregables completados:**
 
