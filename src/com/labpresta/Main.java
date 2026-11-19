@@ -2,54 +2,59 @@ package com.labpresta;
 
 import com.labpresta.logica.EquipoService;
 import com.labpresta.persistencia.ConexionDB;
+import com.labpresta.vista.FrmGestionEquipos;
 import com.labpresta.vista.FrmRegistroEquipo;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+
+import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        // 1. Crea la base de datos y tablas en SQLite si no existen
         ConexionDB.inicializarBaseDatos();
 
         SwingUtilities.invokeLater(() -> {
-            FrmRegistroEquipo vista = new FrmRegistroEquipo();
             EquipoService equipoService = new EquipoService();
+            FrmGestionEquipos vistaGestion = new FrmGestionEquipos(equipoService);
 
-            // 2. Conecta el clic del botón Guardar con tus validaciones
-            vista.getBtnGuardar().addActionListener(e -> {
-                try {
-                    String codigo = vista.getCodigo();
-                    String tipo = vista.getTipo();
-                    String descripcion = vista.getDescripcion();
+            vistaGestion.getBtnNuevoEquipo().addActionListener(e -> {
+                FrmRegistroEquipo vistaRegistro = new FrmRegistroEquipo();
 
-                    equipoService.registrarEquipo(codigo, tipo, descripcion);
+                vistaRegistro.getBtnGuardar().addActionListener(ev -> {
+                    try {
+                        String codigo = vistaRegistro.getCodigo();
+                        String tipo = vistaRegistro.getTipo();
+                        String descripcion = vistaRegistro.getDescripcion();
 
-                    JOptionPane.showMessageDialog(
-                            vista,
+                        equipoService.registrarEquipo(codigo, tipo, descripcion);
+                        vistaGestion.cargarEquipos();
+
+                        JOptionPane.showMessageDialog(
+                            vistaRegistro,
                             "Equipo registrado exitosamente en estado Disponible.",
                             "Registro Exitoso",
                             JOptionPane.INFORMATION_MESSAGE
-                    );
-
-                } catch (IllegalArgumentException ex) {
-                    // Muestra alerta si hay campos vacíos o código repetido
-                    JOptionPane.showMessageDialog(
-                            vista,
+                        );
+                        vistaRegistro.dispose();
+                    } catch (IllegalArgumentException ex) {
+                        JOptionPane.showMessageDialog(
+                            vistaRegistro,
                             ex.getMessage(),
                             "Validación",
                             JOptionPane.WARNING_MESSAGE
-                    );
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(
-                            vista,
+                        );
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(
+                            vistaRegistro,
                             "Error técnico: " + ex.getMessage(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE
-                    );
-                }
+                        );
+                    }
+                });
+
+                vistaRegistro.setVisible(true);
             });
 
-            vista.setVisible(true);
+            vistaGestion.setVisible(true);
         });
     }
 }
