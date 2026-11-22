@@ -6,6 +6,7 @@ import com.labpresta.modelo.Equipo;
 import com.labpresta.persistencia.ConexionDB;
 import com.labpresta.persistencia.EquipoDAO;
 
+
 public class PruebaPersistencia {
     public static void main(String[] args) {
         System.out.println("1.  Inicializar Base de Datos");
