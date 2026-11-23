@@ -1,9 +1,13 @@
 package com.labpresta;
 
 import com.labpresta.logica.EquipoService;
+import com.labpresta.logica.UsuarioService;
 import com.labpresta.persistencia.ConexionDB;
 import com.labpresta.vista.FrmGestionEquipos;
+import com.labpresta.vista.FrmGestionUsuarios;
 import com.labpresta.vista.FrmRegistroEquipo;
+import com.labpresta.vista.FrmRegistroUsuario;
+import com.labpresta.vista.VentanaPrincipal;
 
 import javax.swing.*;
 
@@ -13,48 +17,100 @@ public class Main {
 
         SwingUtilities.invokeLater(() -> {
             EquipoService equipoService = new EquipoService();
-            FrmGestionEquipos vistaGestion = new FrmGestionEquipos(equipoService);
+            UsuarioService usuarioService = new UsuarioService();
+            VentanaPrincipal menu = new VentanaPrincipal();
 
-            vistaGestion.getBtnNuevoEquipo().addActionListener(e -> {
-                FrmRegistroEquipo vistaRegistro = new FrmRegistroEquipo();
+            menu.getBtnGestionEquipos().addActionListener(e -> abrirGestionEquipos(equipoService));
+            menu.getBtnGestionUsuarios().addActionListener(e -> abrirGestionUsuarios(usuarioService));
 
-                vistaRegistro.getBtnGuardar().addActionListener(ev -> {
-                    try {
-                        String codigo = vistaRegistro.getCodigo();
-                        String tipo = vistaRegistro.getTipo();
-                        String descripcion = vistaRegistro.getDescripcion();
+            menu.setVisible(true);
+        });
+    }
 
-                        equipoService.registrarEquipo(codigo, tipo, descripcion);
-                        vistaGestion.cargarEquipos();
+    private static void abrirGestionEquipos(EquipoService equipoService) {
+        FrmGestionEquipos vistaGestion = new FrmGestionEquipos(equipoService);
+        vistaGestion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-                        JOptionPane.showMessageDialog(
+        vistaGestion.getBtnNuevoEquipo().addActionListener(e -> {
+            FrmRegistroEquipo vistaRegistro = new FrmRegistroEquipo();
+
+            vistaRegistro.getBtnGuardar().addActionListener(ev -> {
+                try {
+                    String codigo = vistaRegistro.getCodigo();
+                    String tipo = vistaRegistro.getTipo();
+                    String descripcion = vistaRegistro.getDescripcion();
+
+                    equipoService.registrarEquipo(codigo, tipo, descripcion);
+                    vistaGestion.cargarEquipos();
+
+                    JOptionPane.showMessageDialog(
                             vistaRegistro,
                             "Equipo registrado exitosamente en estado Disponible.",
                             "Registro Exitoso",
-                            JOptionPane.INFORMATION_MESSAGE
-                        );
-                        vistaRegistro.dispose();
-                    } catch (IllegalArgumentException ex) {
-                        JOptionPane.showMessageDialog(
+                            JOptionPane.INFORMATION_MESSAGE);
+                    vistaRegistro.dispose();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(
                             vistaRegistro,
                             ex.getMessage(),
                             "Validación",
-                            JOptionPane.WARNING_MESSAGE
-                        );
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(
+                            JOptionPane.WARNING_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
                             vistaRegistro,
                             "Error técnico: " + ex.getMessage(),
                             "Error",
-                            JOptionPane.ERROR_MESSAGE
-                        );
-                    }
-                });
-
-                vistaRegistro.setVisible(true);
+                            JOptionPane.ERROR_MESSAGE);
+                }
             });
 
-            vistaGestion.setVisible(true);
+            vistaRegistro.setVisible(true);
         });
+
+        vistaGestion.setVisible(true);
+    }
+
+    private static void abrirGestionUsuarios(UsuarioService usuarioService) {
+        FrmGestionUsuarios vistaGestion = new FrmGestionUsuarios(usuarioService);
+        vistaGestion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        vistaGestion.getBtnNuevoUsuario().addActionListener(e -> {
+            FrmRegistroUsuario vistaRegistro = new FrmRegistroUsuario();
+
+            vistaRegistro.getBtnGuardar().addActionListener(ev -> {
+                try {
+                    String cedula = vistaRegistro.getCedula();
+                    String nombre = vistaRegistro.getNombreCompleto();
+                    String tipo = vistaRegistro.getTipo();
+                    String telefono = vistaRegistro.getTelefono();
+
+                    usuarioService.registrarUsuario(cedula, nombre, tipo, telefono);
+                    vistaGestion.cargarUsuarios();
+
+                    JOptionPane.showMessageDialog(
+                            vistaRegistro,
+                            "Usuario registrado exitosamente.",
+                            "Registro Exitoso",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    vistaRegistro.dispose();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(
+                            vistaRegistro,
+                            ex.getMessage(),
+                            "Validación",
+                            JOptionPane.WARNING_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(
+                            vistaRegistro,
+                            "Error técnico: " + ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+            vistaRegistro.setVisible(true);
+        });
+
+        vistaGestion.setVisible(true);
     }
 }
