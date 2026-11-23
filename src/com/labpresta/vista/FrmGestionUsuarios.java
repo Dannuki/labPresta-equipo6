@@ -6,6 +6,8 @@ import com.labpresta.modelo.Usuario;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 public class FrmGestionUsuarios extends JFrame {
@@ -116,37 +118,10 @@ public class FrmGestionUsuarios extends JFrame {
     private void abrirRegistroUsuario() {
         FrmRegistroUsuario vistaRegistro = new FrmRegistroUsuario();
 
-        vistaRegistro.getBtnGuardar().addActionListener(ev -> {
-            try {
-                String cedula = vistaRegistro.getCedula();
-                String nombre = vistaRegistro.getNombreCompleto();
-                String tipo = vistaRegistro.getTipo();
-                String telefono = vistaRegistro.getTelefono();
-
-                usuarioService.registrarUsuario(cedula, nombre, tipo, telefono);
+        vistaRegistro.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
                 cargarUsuarios();
-
-                JOptionPane.showMessageDialog(
-                    vistaRegistro,
-                    "Usuario registrado exitosamente.",
-                    "Registro Exitoso",
-                    JOptionPane.INFORMATION_MESSAGE
-                );
-                vistaRegistro.dispose();
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(
-                    vistaRegistro,
-                    ex.getMessage(),
-                    "Validación",
-                    JOptionPane.WARNING_MESSAGE
-                );
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(
-                    vistaRegistro,
-                    "Error técnico: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-                );
             }
         });
 
