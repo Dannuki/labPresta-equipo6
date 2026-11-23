@@ -1,5 +1,5 @@
 package com.labpresta.vista;
-
+import com.labpresta.logica.UsuarioService;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -24,7 +25,10 @@ public class FrmRegistroUsuario extends JFrame {
     private JButton btnGuardar;
     private JButton btnLimpiar;
 
+    private final UsuarioService usuarioService;
+
     public FrmRegistroUsuario() {
+        this.usuarioService = new UsuarioService();
         setTitle("LabPresta - Registro de Usuarios");
         setSize(450, 320);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -45,7 +49,6 @@ public class FrmRegistroUsuario extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(6, 6, 6, 6);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 0.3;
@@ -91,12 +94,47 @@ public class FrmRegistroUsuario extends JFrame {
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         btnGuardar = new JButton("Guardar Usuario");
         btnLimpiar = new JButton("Limpiar");
-
+        btnGuardar.addActionListener(e -> guardarUsuario());
         btnLimpiar.addActionListener(e -> limpiarCampos());
 
         panelBotones.add(btnGuardar);
         panelBotones.add(btnLimpiar);
         add(panelBotones, BorderLayout.SOUTH);
+    }
+
+    private void guardarUsuario() {
+        try {
+            String cedula = getCedula();
+            String nombre = getNombreCompleto();
+            String tipo = getTipo();
+            String telefono = getTelefono();
+
+            usuarioService.registrarUsuario(cedula, nombre, tipo, telefono);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Usuario registrado exitosamente en la base de datos.",
+                    "Registro Exitoso",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            limpiarCampos();
+
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    ex.getMessage(),
+                    "Validacion",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error al guardar el usuario: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     public void limpiarCampos() {
