@@ -106,4 +106,84 @@ public class PrestamoService {
         }
         return null;
     }
+
+     public String devolverEquipo(int idPrestamo, String codigoEquipo, String fechaDevolucionStr) {
+        if (idPrestamo <= 0) {
+            throw new IllegalArgumentException("Debe seleccionar un prestamo activo valido.");
+        }
+        if (codigoEquipo == null || codigoEquipo.trim().isEmpty()) {
+            throw new IllegalArgumentException("El codigo del equipo es obligatorio para procesar la devolucion.");
+        }
+        if (fechaDevolucionStr == null || fechaDevolucionStr.trim().isEmpty()) {
+            throw new IllegalArgumentException("La fecha de devolucion es obligatoria.");
+        }
+
+        LocalDate fechaDevolucion;
+        try {
+            fechaDevolucion = LocalDate.parse(fechaDevolucionStr.trim());
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Formato de fecha de devolucion invalido. Use AAAA-MM-DD.");
+        }
+
+        Prestamo prestamoActivo = buscarPrestamoPorId(idPrestamo);
+        if (prestamoActivo == null) {
+            throw new IllegalArgumentException("No se encontro el prestamo con ID " + idPrestamo + ".");
+        }
+        if (prestamoActivo.getFechaDevolucion() != null && !prestamoActivo.getFechaDevolucion().trim().isEmpty()) {
+            throw new IllegalArgumentException("Este prestamo ya fue devuelto anteriormente.");
+        }
+
+        LocalDate fechaPrestamo = LocalDate.parse(prestamoActivo.getFechaPrestamo());
+        if (fechaDevolucion.isBefore(fechaPrestamo)) {
+            throw new IllegalArgumentException("La fecha de devolucion no puede ser anterior a la fecha de prestamo (" + fechaPrestamo + ").");
+        }
+
+        String codigoLimpio = codigoEquipo.trim().toUpperCase();
+
+        boolean devuelto = prestamoDAO.registrarDevolucion(idPrestamo, fechaDevolucion.toString());
+        if (!devuelto) {
+            throw new RuntimeException("No se pudo registrar la devolucion en la base de datos.");
+        }
+
+        boolean equipoLiberado = equipoDAO.actualizarEstado(codigoLimpio, "Disponible");
+        if (!equipoLiberado) {
+            throw new RuntimeException("Se registro la devolucion, pero no se pudo liberar el equipo a Disponible.");
+        }
+
+        LocalDate fechaLimite = LocalDate.parse(prestamoActivo.getFechaLimite());
+        return fechaDevolucion.isAfter(fechaLimite) ? "Atrasado" : "Devuelto a tiempo";
+    }
+
+    public String obtenerEstadoPrestamo(Prestamo prestamo, LocalDate fechaReferencia) {
+        LocalDate fechaLimite = LocalDate.parse(prestamo.getFechaLimite());
+        String fechaDev = prestamo.getFechaDevolucion();
+
+        if (fechaDev == null || fechaDev.trim().isEmpty()) {
+            return fechaReferencia.isAfter(fechaLimite) ? "Vencido" : "Activo";
+        } else {
+            LocalDate fechaDevolucion = LocalDate.parse(fechaDev.trim());
+            return fechaDevolucion.isAfter(fechaLimite) ? "Atrasado" : "Devuelto a tiempo";
+        }
+    }
+
+    public String obtenerEstadoPrestamo(Prestamo prestamo) {
+        return obtenerEstadoPrestamo(prestamo, LocalDate.now());
+    }
+
+    public List<Prestamo> listarPrestamosActivos() {
+        return prestamoDAO.listarActivos();
+    }
+
+    public List<Prestamo> listarHistorialPrestamos() {
+        return prestamoDAO.listarHistorial();
+    }
+
+    private Prestamo buscarPrestamoPorId(int idPrestamo) {
+        for (Prestamo p : prestamoDAO.listarHistorial()) {
+            if (p.getId() == idPrestamo) {
+                return p;
+            }
+        }
+        return null;
+    }
 }
