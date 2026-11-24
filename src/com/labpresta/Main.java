@@ -6,7 +6,6 @@ import com.labpresta.persistencia.ConexionDB;
 import com.labpresta.vista.FrmGestionEquipos;
 import com.labpresta.vista.FrmGestionUsuarios;
 import com.labpresta.vista.FrmRegistroEquipo;
-import com.labpresta.vista.FrmRegistroUsuario;
 import com.labpresta.vista.VentanaPrincipal;
 
 import javax.swing.*;
@@ -73,44 +72,6 @@ public class Main {
     private static void abrirGestionUsuarios(UsuarioService usuarioService) {
         FrmGestionUsuarios vistaGestion = new FrmGestionUsuarios(usuarioService);
         vistaGestion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        vistaGestion.getBtnNuevoUsuario().addActionListener(e -> {
-            FrmRegistroUsuario vistaRegistro = new FrmRegistroUsuario();
-
-            vistaRegistro.getBtnGuardar().addActionListener(ev -> {
-                try {
-                    String cedula = vistaRegistro.getCedula();
-                    String nombre = vistaRegistro.getNombreCompleto();
-                    String tipo = vistaRegistro.getTipo();
-                    String telefono = vistaRegistro.getTelefono();
-
-                    usuarioService.registrarUsuario(cedula, nombre, tipo, telefono);
-                    vistaGestion.cargarUsuarios();
-
-                    JOptionPane.showMessageDialog(
-                            vistaRegistro,
-                            "Usuario registrado exitosamente.",
-                            "Registro Exitoso",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    vistaRegistro.dispose();
-                } catch (IllegalArgumentException ex) {
-                    JOptionPane.showMessageDialog(
-                            vistaRegistro,
-                            ex.getMessage(),
-                            "Validación",
-                            JOptionPane.WARNING_MESSAGE);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(
-                            vistaRegistro,
-                            "Error técnico: " + ex.getMessage(),
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            });
-
-            vistaRegistro.setVisible(true);
-        });
-
         vistaGestion.setVisible(true);
     }
 }
