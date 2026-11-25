@@ -7,10 +7,11 @@ public class VentanaPrincipal extends JFrame {
 
     private JButton btnGestionEquipos;
     private JButton btnGestionUsuarios;
+    private JButton btnGestionPrestamos;
 
     public VentanaPrincipal() {
         setTitle("LabPresta - Menú Principal");
-        setSize(420, 260);
+        setSize(420, 320);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
@@ -20,7 +21,7 @@ public class VentanaPrincipal extends JFrame {
         lblTitulo.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
         add(lblTitulo, BorderLayout.NORTH);
 
-        JPanel pnlBotones = new JPanel(new GridLayout(2, 1, 15, 15));
+        JPanel pnlBotones = new JPanel(new GridLayout(3, 1, 15, 15));
         pnlBotones.setBorder(BorderFactory.createEmptyBorder(15, 50, 30, 50));
 
         btnGestionEquipos = new JButton("Gestión de Equipos");
@@ -29,8 +30,12 @@ public class VentanaPrincipal extends JFrame {
         btnGestionUsuarios = new JButton("Gestión de Usuarios");
         btnGestionUsuarios.setFont(new Font("Arial", Font.PLAIN, 14));
 
+        btnGestionPrestamos = new JButton("Gestión de Préstamos y Devoluciones");
+        btnGestionPrestamos.setFont(new Font("Arial", Font.PLAIN, 14));
+
         pnlBotones.add(btnGestionEquipos);
         pnlBotones.add(btnGestionUsuarios);
+        pnlBotones.add(btnGestionPrestamos);
         add(pnlBotones, BorderLayout.CENTER);
     }
 
@@ -40,5 +45,9 @@ public class VentanaPrincipal extends JFrame {
 
     public JButton getBtnGestionUsuarios() {
         return btnGestionUsuarios;
+    }
+
+    public JButton getBtnGestionPrestamos() {
+        return btnGestionPrestamos;
     }
 }

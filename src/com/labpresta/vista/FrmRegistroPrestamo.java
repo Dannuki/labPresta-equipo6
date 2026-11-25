@@ -8,6 +8,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import com.labpresta.logica.PrestamoService;
 
 public class FrmRegistroPrestamo extends JFrame {
 
@@ -20,12 +21,20 @@ public class FrmRegistroPrestamo extends JFrame {
     private JButton btnGuardar;
     private JButton btnLimpiar;
     private JButton btnCancelar;
+    private PrestamoService prestamoService;
 
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ISO_LOCAL_DATE; // yyyy-MM-dd
 
     public FrmRegistroPrestamo() {
         this(new PrestamoDAO());
     }
+
+    public FrmRegistroPrestamo(PrestamoService prestamoService) {
+        this(new PrestamoDAO());
+        this.prestamoService = prestamoService;
+        txtFechaLimite.setEditable(false);
+        txtFechaLimite.setText("Automática (1 o 3 días)");
+}
 
     public FrmRegistroPrestamo(PrestamoDAO prestamoDAO) {
         this.prestamoDAO = prestamoDAO != null ? prestamoDAO : new PrestamoDAO();
@@ -101,6 +110,24 @@ public class FrmRegistroPrestamo extends JFrame {
         String cedulaUsuario = txtCedulaUsuario.getText().trim();
         String fechaPrestamoTexto = txtFechaPrestamo.getText().trim();
         String fechaLimiteTexto = txtFechaLimite.getText().trim();
+
+        if (prestamoService != null) {
+            try {
+                prestamoService.registrarPrestamo(codigoEquipo, cedulaUsuario, fechaPrestamoTexto);
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Préstamo registrado exitosamente y equipo marcado como Prestado.",
+                    "Registro Exitoso",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+                dispose();
+                } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Validación", JOptionPane.WARNING_MESSAGE);
+                }  catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            return;
+        }
 
         if (codigoEquipo.isEmpty() || cedulaUsuario.isEmpty()
                 || fechaPrestamoTexto.isEmpty() || fechaLimiteTexto.isEmpty()) {

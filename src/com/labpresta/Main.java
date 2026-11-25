@@ -7,6 +7,8 @@ import com.labpresta.vista.FrmGestionEquipos;
 import com.labpresta.vista.FrmGestionUsuarios;
 import com.labpresta.vista.FrmRegistroEquipo;
 import com.labpresta.vista.VentanaPrincipal;
+import com.labpresta.logica.PrestamoService;
+import com.labpresta.vista.FrmGestionPrestamos;
 
 import javax.swing.*;
 
@@ -18,9 +20,11 @@ public class Main {
             EquipoService equipoService = new EquipoService();
             UsuarioService usuarioService = new UsuarioService();
             VentanaPrincipal menu = new VentanaPrincipal();
+            PrestamoService prestamoService = new PrestamoService();
 
             menu.getBtnGestionEquipos().addActionListener(e -> abrirGestionEquipos(equipoService));
             menu.getBtnGestionUsuarios().addActionListener(e -> abrirGestionUsuarios(usuarioService));
+            menu.getBtnGestionPrestamos().addActionListener(e -> abrirGestionPrestamos(prestamoService));
 
             menu.setVisible(true);
         });
@@ -71,6 +75,12 @@ public class Main {
 
     private static void abrirGestionUsuarios(UsuarioService usuarioService) {
         FrmGestionUsuarios vistaGestion = new FrmGestionUsuarios(usuarioService);
+        vistaGestion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        vistaGestion.setVisible(true);
+    }
+
+    private static void abrirGestionPrestamos(PrestamoService prestamoService) {
+        FrmGestionPrestamos vistaGestion = new FrmGestionPrestamos(prestamoService);
         vistaGestion.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         vistaGestion.setVisible(true);
     }
