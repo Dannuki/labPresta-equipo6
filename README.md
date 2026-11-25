@@ -1,3 +1,75 @@
+# LabPresta — Sistema de Control de Préstamos de Equipos de Laboratorio
+
+**Equipo:** Equipo 6  
+**Escenario:** C — Control de préstamos de equipos de laboratorio (`LabPresta`)  
+**Tablero de Trello:** [Ver tablero de seguimiento en Trello](https://trello.com/invite/b/6af88e86e57621a956ceb74f/ATTI79e72c285c7cdba2775f0913ba6582d931D728BF/equipo6-labpresta)
+
+Aplicación de escritorio desarrollada en **Java (Swing)** con persistencia en **SQLite (JDBC)** bajo la metodología **Scrum**, construida en **JDK 17**.
+
+---
+
+## 👥 Integrantes y Roles
+
+| Integrante | Rol Scrum |
+| :--- | :--- |
+| **Santiago Paz** | Product Owner / Desarrollador |
+| **Diego Villagomez** | Scrum Master / Desarrollador | 
+| **Danny Ponce** | Desarrollador |
+| **Richard Quintana** | Desarrollador |
+
+---
+
+## ⚙️ Requisitos del Sistema
+
+* **Java JDK / JRE:** Versión 17 o superior.
+* **Base de datos:** SQLite (embebido mediante `sqlite-jdbc-3.54.1.0.jar`, no requiere instalación adicional).
+
+---
+
+## 🚀 Cómo Ejecutar la Aplicación
+
+### 🪟 En Windows
+
+1. Clonar el repositorio (o descargar el ZIP desde **Code → Download ZIP** y descomprimirlo):
+   ```powershell
+   git clone https://github.com/Dannuki/labPresta-equipo6.git
+   ```
+2. Entrar a la carpeta `dist`:
+   ```powershell
+   cd labPresta-equipo6\dist
+   ```
+3. **Opción A — Desde terminal (PowerShell o CMD, recomendada):**
+   ```powershell
+   java -jar LabPresta.jar
+   ```
+4. **Opción B — Con doble clic desde el Explorador de archivos:**
+   * Abre la carpeta `dist` y haz doble clic sobre `LabPresta.jar`.
+   * *Si al hacer doble clic se abre como archivo comprimido (WinRAR / 7-Zip):* haz **clic derecho** sobre `LabPresta.jar` → **Abrir con** → **Elegir otra aplicación** → selecciona **Java(TM) Platform SE binary** y marca **Usar siempre esta aplicación para abrir los archivos .jar**.
+   * *Si Windows Defender muestra una alerta preventiva:* selecciona **Más información → Ejecutar de todas formas** (o **Permitir** en Seguridad de Windows).
+
+### 🐧 En Linux (Terminal)
+
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/Dannuki/labPresta-equipo6.git
+   ```
+2. Entrar a la carpeta `dist`:
+   ```bash
+   cd labPresta-equipo6/dist
+   ```
+3. Ejecutar el archivo `.jar`:
+   ```bash
+   java -jar LabPresta.jar
+   ```
+
+> **Importante:** En ambos sistemas operativos, ejecuta siempre `LabPresta.jar` desde dentro de la carpeta `dist` (sin mover el `.jar` suelto a otra ubicación) para que la aplicación reconozca la ruta relativa `datos/labpresta.db` y cargue los registros de prueba precargados[cite: 7].
+
+---
+
+
+
+
+
 # LabPresta
 
 Aplicación de escritorio desarrollada en **Java (Swing)** con persistencia en **SQLite (JDBC)** bajo la metodología **Scrum**, correspondiente al **Escenario C**.
