@@ -1,8 +1,9 @@
 package com.labpresta.logica;
 
+import java.util.List;
+
 import com.labpresta.modelo.Usuario;
 import com.labpresta.persistencia.UsuarioDAO;
-import java.util.List;
 
 public class UsuarioService {
 
@@ -24,9 +25,17 @@ public class UsuarioService {
         }
 
         String cedulaLimpia = cedula.trim();
+        if (!cedulaLimpia.matches("\\d{10}")) {
+            throw new IllegalArgumentException("La cedula debe contener exactamente 10 digitos numericos.");
+        }
+
         String nombreLimpio = nombreCompleto.trim();
         String tipoLimpio = tipo.trim();
         String telefonoLimpio = (telefono != null && !telefono.trim().isEmpty()) ? telefono.trim() : "Sin registrar";
+
+        if (!"Sin registrar".equals(telefonoLimpio) && !telefonoLimpio.matches("\\d{10}")) {
+            throw new IllegalArgumentException("El telefono debe contener 10 digitos numericos o dejarse vacio.");
+        }
 
         if (!"Estudiante".equalsIgnoreCase(tipoLimpio) && !"Docente".equalsIgnoreCase(tipoLimpio)) {
             throw new IllegalArgumentException("El tipo de usuario debe ser 'Estudiante' o 'Docente'.");
